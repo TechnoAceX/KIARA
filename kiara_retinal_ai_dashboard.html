@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#040d1a;--bg2:#071428;--bg3:#0a1d3a;
+--glass:rgba(6,25,55,0.6);--glass2:rgba(10,35,75,0.4);
+--cyan:#00d4ff;--cyan2:#00a8d0;--cyan3:rgba(0,212,255,0.15);
+--blue:#1a6bff;--blue2:rgba(26,107,255,0.2);
+--teal:#00ffd0;--teal2:rgba(0,255,208,0.12);
+--border:rgba(0,212,255,0.18);--border2:rgba(0,212,255,0.08);
+--text:#e0f0ff;--text2:#8ab4cc;--text3:#4a7a99;
+--green:#00ff88;--amber:#ffb300;--red:#ff4444;
+--font:'Rajdhani',sans-serif;--font2:'Exo 2',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font2);overflow-x:hidden;min-height:100vh}
+
+/* Animated grid bg */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);
+  background-size:60px 60px;pointer-events:none;z-index:0;
+  animation:gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+/* ── NAVBAR ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,13,26,0.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);padding:14px 0;
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{
+  width:38px;height:38px;border-radius:8px;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font);font-weight:700;font-size:18px;color:#fff;
+  box-shadow:0 0 20px rgba(0,212,255,0.4);
+  position:relative;overflow:hidden;
+}
+.logo-icon::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
+  animation:shimmer 3s infinite;
+}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.logo-text{font-family:var(--font);font-weight:700;font-size:22px;letter-spacing:3px;color:var(--cyan);text-shadow:0 0 20px rgba(0,212,255,0.5)}
+.logo-sub{font-size:10px;color:var(--text3);letter-spacing:1px;font-family:var(--font2)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{
+  color:var(--text2);font-size:12px;letter-spacing:1.5px;text-decoration:none;
+  font-family:var(--font);font-weight:500;text-transform:uppercase;
+  transition:color .3s;cursor:pointer;
+}
+.nav-links a:hover{color:var(--cyan)}
+.nav-badge{
+  background:rgba(0,212,255,0.1);border:1px solid var(--border);
+  border-radius:4px;padding:4px 12px;font-size:11px;color:var(--cyan);
+  letter-spacing:1px;font-family:var(--font);font-weight:600;
+}
+.pulse-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:6px;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ── HERO ── */
+.hero{
+  min-height:92vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:80px 0;position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:700px;height:500px;
+  background:radial-gradient(ellipse,rgba(0,212,255,0.08) 0%,rgba(26,107,255,0.05) 40%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.2);
+  border-radius:50px;padding:8px 20px;margin-bottom:32px;
+  font-size:11px;letter-spacing:2px;color:var(--cyan);font-family:var(--font);font-weight:600;
+  animation:fadeUp .8s ease both;
+}
+.hero-title{
+  font-family:var(--font);font-weight:700;
+  font-size:clamp(60px,12vw,110px);letter-spacing:12px;
+  background:linear-gradient(135deg,#fff 0%,var(--cyan) 50%,#1a6bff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:16px;
+  animation:fadeUp .8s .1s ease both;
+  text-shadow:none;filter:drop-shadow(0 0 40px rgba(0,212,255,0.3));
+}
+.hero-acronym{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:40px;
+  max-width:640px;width:100%;
+  animation:fadeUp .8s .2s ease both;
+}
+.acr-item{
+  background:var(--glass);border:1px solid var(--border2);border-radius:8px;padding:10px;
+  font-size:11px;font-family:var(--font);letter-spacing:1px;
+}
+.acr-letter{font-size:20px;font-weight:700;color:var(--cyan);display:block;margin-bottom:2px}
+.acr-word{color:var(--text2);font-size:9px;letter-spacing:1.5px}
+.hero-sub{
+  font-size:16px;color:var(--text2);max-width:500px;line-height:1.7;margin-bottom:48px;
+  font-family:var(--font2);font-weight:300;
+  animation:fadeUp .8s .3s ease both;
+}
+.hero-btns{display:flex;gap:16px;justify-content:center;animation:fadeUp .8s .4s ease both}
+.btn-primary{
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#fff;border:none;padding:14px 32px;border-radius:8px;
+  font-family:var(--font);font-weight:600;font-size:14px;letter-spacing:2px;
+  cursor:pointer;transition:all .3s;text-transform:uppercase;
+  box-shadow:0 0 30px rgba(0,212,255,0.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,212,255,0.5)}
+.btn-outline{
+  background:transparent;color:var(--cyan);border:1px solid var(--border);
+  padding:14px 32px;border-radius:8px;font-family:var(--font);font-weight:600;
+  font-size:14px;letter-spacing:2px;cursor:pointer;transition:all .3s;text-transform:uppercase;
+}
+.btn-outline:hover{background:var(--cyan3);box-shadow:0 0 20px rgba(0,212,255,0.2)}
+
+/* Retinal SVG decoration */
+.retinal-decoration{
+  position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  opacity:.15;pointer-events:none;animation:slowRotate 30s linear infinite;
+}
+.retinal-decoration-l{
+  position:absolute;left:-80px;top:40%;transform:translateY(-50%);
+  opacity:.08;pointer-events:none;animation:slowRotate 40s linear infinite reverse;
+}
+@keyframes slowRotate{from{transform:translateY(-50%) rotate(0deg)}to{transform:translateY(-50%) rotate(360deg)}}
+
+.hero-stats{
+  display:flex;gap:40px;margin-top:60px;padding-top:40px;
+  border-top:1px solid var(--border2);
+  animation:fadeUp .8s .5s ease both;
+}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:var(--font);font-size:32px;font-weight:700;color:var(--cyan)}
+.hero-stat-label{font-size:11px;color:var(--text3);letter-spacing:1.5px;margin-top:2px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION HEADERS ── */
+.section{padding:80px 0}
+.section-header{text-align:center;margin-bottom:56px}
+.section-label{
+  font-size:11px;color:var(--cyan);letter-spacing:3px;font-family:var(--font);font-weight:600;
+  text-transform:uppercase;margin-bottom:12px;display:block;
+}
+.section-title{
+  font-family:var(--font);font-size:40px;font-weight:700;letter-spacing:2px;
+  background:linear-gradient(135deg,#fff,var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-line{
+  width:60px;height:2px;margin:16px auto 0;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+}
+
+/* ── GLASS CARD ── */
+.glass-card{
+  background:var(--glass);backdrop-filter:blur(20px);
+  border:1px solid var(--border);border-radius:16px;
+  position:relative;overflow:hidden;transition:border-color .3s,transform .3s;
+}
+.glass-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,212,255,0.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.glass-card:hover{border-color:rgba(0,212,255,0.4);transform:translateY(-2px)}
+
+/* ── UPLOAD SECTION ── */
+.upload-zone{
+  border:2px dashed rgba(0,212,255,0.3);border-radius:16px;
+  padding:60px 40px;text-align:center;cursor:pointer;
+  transition:all .3s;position:relative;overflow:hidden;
+  background:rgba(0,212,255,0.02);
+}
+.upload-zone:hover,.upload-zone.drag{
+  border-color:var(--cyan);background:rgba(0,212,255,0.06);
+  box-shadow:0 0 40px rgba(0,212,255,0.1) inset;
+}
+.upload-icon{
+  width:80px;height:80px;margin:0 auto 24px;
+  background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.upload-icon svg{animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.upload-title{font-family:var(--font);font-size:20px;font-weight:600;letter-spacing:1px;margin-bottom:8px}
+.upload-sub{font-size:13px;color:var(--text2);margin-bottom:24px}
+.upload-formats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.format-tag{
+  background:rgba(0,212,255,0.06);border:1px solid var(--border);
+  border-radius:4px;padding:4px 10px;font-size:11px;color:var(--text3);letter-spacing:1px;
+  font-family:var(--font);
+}
+.file-input{display:none}
+
+/* Image preview */
+.preview-card{
+  background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:20px;
+}
+.preview-img{
+  width:100%;aspect-ratio:1;border-radius:8px;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  border:1px solid var(--border2);
+}
+.preview-img img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.preview-info{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.preview-row{display:flex;justify-content:space-between;font-size:12px}
+.preview-row-label{color:var(--text3);letter-spacing:1px;font-family:var(--font)}
+.preview-row-val{color:var(--text2);font-family:var(--font2)}
+
+/* ── PREDICTION PANEL ── */
+.prediction-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}
+.pred-main{
+  background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:28px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.pred-status{
+  font-family:var(--font);font-size:36px;font-weight:700;letter-spacing:2px;
+  margin-bottom:4px;
+}
+.status-healthy{color:var(--green)}
+.status-mild{color:var(--amber)}
+.status-moderate{color:#ff8c00}
+.status-severe{color:var(--red)}
+.severity-bar{
+  height:6px;background:rgba(255,255,255,0.06);border-radius:3px;margin:16px 0;overflow:hidden;
+}
+.severity-fill{
+  height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--green),var(--amber),var(--red));
+  transition:width 1s ease;
+}
+
+.confidence-ring{
+  width:120px;height:120px;margin:0 auto 16px;
+  position:relative;
+}
+.confidence-ring svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(0,212,255,0.1);stroke-width:8}
+.ring-fill{fill:none;stroke:var(--cyan);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease}
+.ring-label{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:var(--font);font-size:22px;font-weight:700;color:var(--cyan);
+  text-align:center;
+}
+.ring-sub{font-size:9px;color:var(--text3);letter-spacing:1px;display:block}
+
+.pred-metric{
+  background:rgba(0,212,255,0.04);border:1px solid var(--border2);
+  border-radius:10px;padding:16px;
+}
+.pred-metric-label{font-size:11px;color:var(--text3);letter-spacing:1.5px;font-family:var(--font);margin-bottom:6px}
+.pred-metric-val{font-family:var(--font);font-size:24px;font-weight:700;color:var(--text)}
+
+/* ── SEVERITY LEVELS ── */
+.severity-levels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.severity-level{
+  background:var(--glass);border:1px solid var(--border2);border-radius:10px;
+  padding:16px 12px;text-align:center;cursor:pointer;transition:all .3s;
+}
+.severity-level.active,.severity-level:hover{border-color:var(--cyan);background:var(--cyan3)}
+.sev-dot{width:10px;height:10px;border-radius:50%;margin:0 auto 10px}
+.sev-name{font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:1px;margin-bottom:2px}
+.sev-pct{font-size:11px;color:var(--text3)}
+
+/* ── GRADCAM SECTION ── */
+.gradcam-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.gradcam-panel{border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.gradcam-header{
+  padding:14px 18px;background:rgba(0,0,0,0.3);
+  font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:2px;
+  display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border2);
+}
+.gradcam-img{
+  width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  background:var(--bg3);position:relative;overflow:hidden;
+}
+.retina-svg{width:100%;height:100%}
+
+/* ── XAI PANEL ── */
+.xai-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.xai-metric{
+  background:rgba(0,212,255,0.04);border:1px solid var(--border2);
+  border-radius:10px;padding:16px;
+}
+.xai-metric-label{font-size:10px;color:var(--text3);letter-spacing:1.5px;font-family:var(--font);margin-bottom:8px}
+.xai-metric-val{font-family:var(--font);font-size:22px;font-weight:700;color:var(--cyan)}
+.xai-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-top:8px;overflow:hidden}
+.xai-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--cyan),var(--blue));transition:width 1.5s ease}
+
+.reasoning-box{
+  background:rgba(0,212,255,0.03);border:1px solid rgba(0,212,255,0.15);
+  border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:20px;margin-bottom:20px;
+}
+.reasoning-label{font-size:10px;color:var(--cyan);letter-spacing:2px;font-family:var(--font);margin-bottom:8px}
+.reasoning-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--font2)}
+
+.attention-regions{display:flex;flex-wrap:wrap;gap:8px}
+.region-tag{
+  background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);
+  border-radius:6px;padding:6px 12px;font-size:11px;color:var(--cyan);
+  font-family:var(--font);letter-spacing:1px;
+  display:flex;align-items:center;gap:6px;
+}
+.region-dot{width:6px;height:6px;border-radius:50%}
+
+/* ── ANALYTICS ── */
+.analytics-grid{display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:24px}
+.stat-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{
+  background:var(--glass);border:1px solid var(--border);border-radius:12px;
+  padding:20px;text-align:center;
+}
+.stat-card-icon{
+  width:40px;height:40px;border-radius:8px;margin:0 auto 12px;
+  background:rgba(0,212,255,0.1);display:flex;align-items:center;justify-content:center;
+}
+.stat-num{font-family:var(--font);font-size:28px;font-weight:700;color:var(--cyan)}
+.stat-label{font-size:11px;color:var(--text3);letter-spacing:1px;margin-top:4px;font-family:var(--font)}
+
+/* Chart bar */
+.chart-card{padding:24px}
+.chart-title{font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1.5px;color:var(--text2);margin-bottom:20px}
+.bar-chart{display:flex;align-items:flex-end;gap:16px;height:140px;padding-bottom:8px}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar{
+  width:100%;border-radius:4px 4px 0 0;position:relative;
+  background:linear-gradient(180deg,var(--cyan),var(--blue));
+  transition:height 1s ease;min-height:4px;
+}
+.bar.amber{background:linear-gradient(180deg,var(--amber),#cc8800)}
+.bar.orange{background:linear-gradient(180deg,#ff8c00,#cc5500)}
+.bar.red{background:linear-gradient(180deg,var(--red),#cc0000)}
+.bar-label{font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:.5px;text-align:center}
+.bar-val{font-size:11px;color:var(--text2);font-family:var(--font);font-weight:600}
+
+/* Accuracy gauge */
+.gauge-wrap{position:relative;width:160px;height:90px;margin:0 auto 12px;overflow:hidden}
+.gauge-wrap svg{position:absolute;top:0;left:0;width:100%;height:100%}
+.gauge-num{
+  position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+  font-family:var(--font);font-size:26px;font-weight:700;color:var(--cyan);white-space:nowrap;
+}
+
+/* ── TECH STACK ── */
+.tech-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.tech-card{
+  background:var(--glass);border:1px solid var(--border);border-radius:12px;
+  padding:24px 16px;text-align:center;cursor:pointer;transition:all .3s;
+}
+.tech-card:hover{
+  border-color:var(--cyan);transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(0,212,255,0.1),0 0 0 1px rgba(0,212,255,0.2);
+}
+.tech-icon{
+  width:52px;height:52px;border-radius:12px;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font);font-size:18px;font-weight:700;
+  position:relative;overflow:hidden;
+}
+.tech-name{font-family:var(--font);font-size:14px;font-weight:600;letter-spacing:1.5px;margin-bottom:6px}
+.tech-desc{font-size:11px;color:var(--text3);line-height:1.5}
+
+/* ── FUTURE SCOPE ── */
+.future-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.future-card{
+  background:var(--glass);border:1px solid var(--border2);border-radius:12px;
+  padding:24px 16px;text-align:center;cursor:pointer;transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.future-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.future-card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-4px)}
+.future-card:hover::after{opacity:1}
+.future-icon{font-size:28px;margin-bottom:14px}
+.future-name{font-family:var(--font);font-size:13px;font-weight:600;letter-spacing:1px;margin-bottom:6px;color:var(--text)}
+.future-desc{font-size:11px;color:var(--text3);line-height:1.5}
+.future-tag{
+  display:inline-block;margin-top:10px;
+  background:rgba(0,255,208,0.08);border:1px solid rgba(0,255,208,0.2);
+  border-radius:4px;padding:3px 8px;font-size:10px;color:var(--teal);
+  font-family:var(--font);letter-spacing:1px;
+}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border2);padding:40px 0;text-align:center;
+}
+.footer-logo{font-family:var(--font);font-size:28px;font-weight:700;letter-spacing:6px;color:var(--cyan);margin-bottom:8px}
+.footer-sub{font-size:12px;color:var(--text3);letter-spacing:1.5px;margin-bottom:24px}
+.footer-links{display:flex;gap:24px;justify-content:center;margin-bottom:24px}
+.footer-links a{font-size:12px;color:var(--text3);text-decoration:none;letter-spacing:1px;transition:color .3s;cursor:pointer}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{font-size:11px;color:var(--text3)}
+
+/* Two-column upload layout */
+.upload-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+
+/* Scanner animation */
+.scanner-line{
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  animation:scan 3s linear infinite;z-index:2;
+}
+@keyframes scan{0%{top:0%}100%{top:100%}}
+.scan-corner{
+  position:absolute;width:20px;height:20px;border-color:var(--cyan);border-style:solid;
+}
+.scan-corner.tl{top:8px;left:8px;border-width:2px 0 0 2px}
+.scan-corner.tr{top:8px;right:8px;border-width:2px 2px 0 0}
+.scan-corner.bl{bottom:8px;left:8px;border-width:0 0 2px 2px}
+.scan-corner.br{bottom:8px;right:8px;border-width:0 2px 2px 0}
+
+/* Dividers */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;margin-bottom:24px}
+.tab{
+  padding:8px 16px;border-radius:6px;font-family:var(--font);font-size:12px;
+  font-weight:600;letter-spacing:1.5px;cursor:pointer;transition:all .3s;
+  background:transparent;border:1px solid transparent;color:var(--text3);
+}
+.tab.active{background:rgba(0,212,255,0.1);border-color:rgba(0,212,255,0.3);color:var(--cyan)}
+.tab:hover:not(.active){color:var(--text2);background:rgba(255,255,255,0.03)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="container">
+<div class="nav-inner">
+  <div class="logo">
+    <div class="logo-icon">K</div>
+    <div>
+      <div class="logo-text">KIARA</div>
+      <div class="logo-sub">Retinal Intelligence Platform</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a>Dashboard</a>
+    <a>Analysis</a>
+    <a>Reports</a>
+    <a>Research</a>
+  </div>
+  <div class="nav-badge"><span class="pulse-dot"></span>SYSTEM ONLINE</div>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-glow"></div>
+<svg class="retinal-decoration" width="340" height="340" viewBox="0 0 340 340" fill="none">
+  <circle cx="170" cy="170" r="160" stroke="rgba(0,212,255,0.4)" stroke-width="0.5"/>
+  <circle cx="170" cy="170" r="130" stroke="rgba(0,212,255,0.3)" stroke-width="0.5"/>
+  <circle cx="170" cy="170" r="100" stroke="rgba(0,212,255,0.2)" stroke-width="0.5"/>
+  <circle cx="170" cy="170" r="60" stroke="rgba(0,212,255,0.3)" stroke-width="1"/>
+  <circle cx="170" cy="170" r="30" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+  <circle cx="170" cy="170" r="10" fill="rgba(0,212,255,0.5)"/>
+  <path d="M170 10 Q220 60 270 170 Q220 280 170 330 Q120 280 70 170 Q120 60 170 10Z" stroke="rgba(0,212,255,0.15)" stroke-width="0.5" fill="none"/>
+  <path d="M10 170 Q60 120 170 70 Q280 120 330 170 Q280 220 170 270 Q60 220 10 170Z" stroke="rgba(0,212,255,0.15)" stroke-width="0.5" fill="none"/>
+  <!-- Vessels -->
+  <path d="M170 140 Q185 155 200 170 Q215 185 220 210" stroke="rgba(0,212,255,0.5)" stroke-width="1.5" fill="none"/>
+  <path d="M170 140 Q155 158 145 175 Q135 192 130 220" stroke="rgba(0,212,255,0.4)" stroke-width="1" fill="none"/>
+  <path d="M170 140 Q190 140 210 135 Q230 130 250 140" stroke="rgba(0,212,255,0.3)" stroke-width="0.8" fill="none"/>
+  <path d="M170 140 Q150 135 135 128 Q120 120 100 130" stroke="rgba(0,212,255,0.3)" stroke-width="0.8" fill="none"/>
+</svg>
+<svg class="retinal-decoration-l" width="280" height="280" viewBox="0 0 280 280" fill="none">
+  <circle cx="140" cy="140" r="130" stroke="rgba(26,107,255,0.6)" stroke-width="0.5"/>
+  <circle cx="140" cy="140" r="100" stroke="rgba(26,107,255,0.4)" stroke-width="0.5"/>
+  <circle cx="140" cy="140" r="70" stroke="rgba(26,107,255,0.3)" stroke-width="0.5"/>
+  <circle cx="140" cy="140" r="40" stroke="rgba(26,107,255,0.5)" stroke-width="1"/>
+  <circle cx="140" cy="140" r="15" fill="rgba(26,107,255,0.3)"/>
+</svg>
+
+<div class="container" style="position:relative;z-index:1">
+  <div class="hero-badge">🔬 DEEP LEARNING · EXPLAINABLE AI · RETINAL ASSESSMENT</div>
+  <h1 class="hero-title">KIARA</h1>
+  <div class="hero-acronym">
+    <div class="acr-item"><span class="acr-letter">K</span><span class="acr-word">Knowledge-based</span></div>
+    <div class="acr-item"><span class="acr-letter">I</span><span class="acr-word">Intelligent</span></div>
+    <div class="acr-item"><span class="acr-letter">A</span><span class="acr-word">Analysis</span></div>
+    <div class="acr-item"><span class="acr-letter">RA</span><span class="acr-word">Retinal Assessment</span></div>
+  </div>
+  <p class="hero-sub">Trustworthy AI-Powered Retinal Assessment System for early detection and grading of Diabetic Retinopathy using Deep Learning and Explainable AI</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('upload-section').scrollIntoView({behavior:'smooth'})">Begin Analysis</button>
+    <button class="btn-outline" onclick="document.getElementById('analytics-section').scrollIntoView({behavior:'smooth'})">View Dashboard</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num">97.4%</div><div class="hero-stat-label">Model Accuracy</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">DR Severity Classes</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">&lt;2s</div><div class="hero-stat-label">Analysis Time</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">XAI</div><div class="hero-stat-label">Explainable AI</div></div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- UPLOAD SECTION -->
+<section class="section" id="upload-section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Step 01 — Image Acquisition</span>
+    <h2 class="section-title">Upload Retinal Fundus Image</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="upload-layout">
+    <div>
+      <div class="upload-zone glass-card" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="scan-corner tl"></div><div class="scan-corner tr"></div>
+        <div class="scan-corner bl"></div><div class="scan-corner br"></div>
+        <div class="upload-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" stroke="rgba(0,212,255,0.4)" stroke-width="1.5"/>
+            <circle cx="18" cy="18" r="8" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
+            <circle cx="18" cy="18" r="3" fill="var(--cyan)"/>
+            <path d="M18 6 V2M18 30 V34M6 18 H2M30 18 H34" stroke="rgba(0,212,255,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="upload-title">Drop Retinal Scan Here</div>
+        <div class="upload-sub">or click to browse your files</div>
+        <div class="upload-formats">
+          <span class="format-tag">JPEG</span>
+          <span class="format-tag">PNG</span>
+          <span class="format-tag">TIFF</span>
+          <span class="format-tag">BMP</span>
+          <span class="format-tag">DICOM</span>
+        </div>
+        <button class="btn-primary" style="font-size:12px;padding:10px 24px">
+          Select Fundus Image
+        </button>
+        <input type="file" id="fileInput" class="file-input" accept="image/*" onchange="handleFile(this)">
+      </div>
+      <div class="glass-card" style="padding:16px;margin-top:16px;display:flex;gap:12px;align-items:center">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="var(--cyan)" stroke-width="1"/><path d="M10 6V11M10 13.5V14" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div>
+          <div style="font-size:12px;font-family:var(--font);font-weight:600;letter-spacing:1px;margin-bottom:2px">Image Requirements</div>
+          <div style="font-size:11px;color:var(--text3)">45° field-of-view fundus photograph, minimum 512×512 pixels, centered on optic disc</div>
+        </div>
+      </div>
+    </div>
+    <div class="preview-card">
+      <div style="font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:2px;color:var(--text3);margin-bottom:16px">IMAGE PREVIEW</div>
+      <div class="preview-img" id="previewArea">
+        <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <div class="scanner-line" style="opacity:.3"></div>
+          <!-- Placeholder retina -->
+          <svg width="180" height="180" viewBox="0 0 180 180">
+            <circle cx="90" cy="90" r="84" fill="rgba(0,212,255,0.04)" stroke="rgba(0,212,255,0.15)" stroke-width="1"/>
+            <circle cx="90" cy="90" r="60" fill="rgba(0,212,255,0.03)" stroke="rgba(0,212,255,0.1)" stroke-width="0.5"/>
+            <circle cx="90" cy="90" r="30" fill="rgba(0,212,255,0.05)" stroke="rgba(0,212,255,0.2)" stroke-width="1"/>
+            <circle cx="90" cy="90" r="8" fill="rgba(0,212,255,0.3)"/>
+            <path d="M90 60 Q105 75 115 90 Q105 108 90 120" stroke="rgba(0,212,255,0.3)" stroke-width="2" fill="none"/>
+            <path d="M90 60 Q75 75 65 90 Q75 108 90 120" stroke="rgba(0,212,255,0.25)" stroke-width="1.5" fill="none"/>
+            <path d="M90 60 Q110 58 125 62" stroke="rgba(0,212,255,0.2)" stroke-width="1" fill="none"/>
+            <path d="M90 60 Q70 58 55 62" stroke="rgba(0,212,255,0.2)" stroke-width="1" fill="none"/>
+            <text x="90" y="155" text-anchor="middle" font-size="10" fill="rgba(0,212,255,0.4)" font-family="Rajdhani" letter-spacing="2">AWAITING SCAN</text>
+          </svg>
+        </div>
+      </div>
+      <div class="preview-info">
+        <div class="preview-row"><span class="preview-row-label">STATUS</span><span class="preview-row-val" id="previewStatus" style="color:var(--text3)">No image loaded</span></div>
+        <div class="preview-row"><span class="preview-row-label">FORMAT</span><span class="preview-row-val" id="previewFormat">—</span></div>
+        <div class="preview-row"><span class="preview-row-label">SIZE</span><span class="preview-row-val" id="previewSize">—</span></div>
+        <div class="preview-row"><span class="preview-row-label">QUALITY</span><span class="preview-row-val" id="previewQuality">—</span></div>
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:16px;font-size:12px;padding:12px" onclick="runAnalysis()">
+        Run AI Analysis →
+      </button>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PREDICTION PANEL -->
+<section class="section" id="prediction-section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Step 02 — AI Prediction</span>
+    <h2 class="section-title">Diagnostic Result</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="severity-levels">
+    <div class="severity-level" onclick="setResult(0)" id="sev-0">
+      <div class="sev-dot" style="background:var(--green)"></div>
+      <div class="sev-name">No DR</div>
+      <div class="sev-pct">Healthy Retina</div>
+    </div>
+    <div class="severity-level active" onclick="setResult(1)" id="sev-1">
+      <div class="sev-dot" style="background:var(--amber)"></div>
+      <div class="sev-name">Mild DR</div>
+      <div class="sev-pct">Early Stage</div>
+    </div>
+    <div class="severity-level" onclick="setResult(2)" id="sev-2">
+      <div class="sev-dot" style="background:#ff8c00"></div>
+      <div class="sev-name">Moderate DR</div>
+      <div class="sev-pct">Intermediate</div>
+    </div>
+    <div class="severity-level" onclick="setResult(3)" id="sev-3">
+      <div class="sev-dot" style="background:var(--red)"></div>
+      <div class="sev-name">Severe DR</div>
+      <div class="sev-pct">Urgent Care</div>
+    </div>
+  </div>
+
+  <div class="prediction-grid" style="margin-top:20px">
+    <div class="pred-main glass-card">
+      <div style="font-size:11px;color:var(--text3);letter-spacing:2px;font-family:var(--font);margin-bottom:12px">AI DIAGNOSIS</div>
+      <div class="pred-status status-mild" id="predStatus">MILD DR</div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:16px" id="predDesc">Early-stage diabetic retinopathy detected</div>
+      <div class="severity-bar"><div class="severity-fill" id="sevFill" style="width:30%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px;margin-bottom:20px">
+        <span>HEALTHY</span><span>SEVERE</span>
+      </div>
+      <div style="display:flex;gap:12px">
+        <div style="flex:1;background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px;margin-bottom:4px">RISK LEVEL</div>
+          <div style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--amber)" id="riskLevel">LOW</div>
+        </div>
+        <div style="flex:1;background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px;margin-bottom:4px">FOLLOW-UP</div>
+          <div style="font-family:var(--font);font-size:14px;font-weight:700;color:var(--text)">6 Months</div>
+        </div>
+        <div style="flex:1;background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:12px;text-align:center">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px;margin-bottom:4px">LESIONS</div>
+          <div style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--text)" id="lesionCount">3</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="glass-card" style="padding:24px;text-align:center">
+        <div style="font-size:11px;color:var(--text3);letter-spacing:2px;font-family:var(--font);margin-bottom:16px">CONFIDENCE SCORE</div>
+        <div class="confidence-ring">
+          <svg viewBox="0 0 120 120" width="120" height="120">
+            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" cx="60" cy="60" r="52" id="confRing"
+              stroke-dasharray="326.7"
+              stroke-dashoffset="88"/>
+          </svg>
+          <div class="ring-label" id="confVal">73%<span class="ring-sub">CONF.</span></div>
+        </div>
+        <div style="font-family:var(--font);font-size:22px;font-weight:700;color:var(--cyan)">94.2%</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px">Model Confidence</div>
+      </div>
+      <div class="glass-card" style="padding:20px">
+        <div style="font-size:10px;color:var(--text3);letter-spacing:1.5px;font-family:var(--font);margin-bottom:12px">CLASS PROBABILITIES</div>
+        <div style="display:flex;flex-direction:column;gap:8px" id="classBars">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--green);font-family:var(--font)">No DR</span><span style="color:var(--text2)">4.2%</span></div>
+            <div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px"><div style="width:4.2%;height:100%;background:var(--green);border-radius:2px;transition:width 1s ease"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--amber);font-family:var(--font)">Mild DR</span><span style="color:var(--text2)">87.6%</span></div>
+            <div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px"><div style="width:87.6%;height:100%;background:var(--amber);border-radius:2px;transition:width 1s ease"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:#ff8c00;font-family:var(--font)">Moderate</span><span style="color:var(--text2)">6.8%</span></div>
+            <div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px"><div style="width:6.8%;height:100%;background:#ff8c00;border-radius:2px;transition:width 1s ease"></div></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:4px"><span style="color:var(--red);font-family:var(--font)">Severe</span><span style="color:var(--text2)">1.4%</span></div>
+            <div style="height:4px;background:rgba(255,255,255,0.05);border-radius:2px"><div style="width:1.4%;height:100%;background:var(--red);border-radius:2px;transition:width 1s ease"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GRADCAM -->
+<section class="section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Step 03 — Visual Explanation</span>
+    <h2 class="section-title">Grad-CAM Visualization</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="gradcam-grid">
+    <div class="gradcam-panel">
+      <div class="gradcam-header">
+        <svg width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" stroke="var(--cyan)" stroke-width="1" fill="none"/><circle cx="7" cy="7" r="3" fill="rgba(0,212,255,0.4)"/></svg>
+        ORIGINAL SCAN
+      </div>
+      <div class="gradcam-img">
+        <div class="scanner-line" style="opacity:.2"></div>
+        <svg class="retina-svg" viewBox="0 0 300 300">
+          <!-- Background -->
+          <circle cx="150" cy="150" r="140" fill="#1a0a00"/>
+          <circle cx="150" cy="150" r="140" fill="rgba(210,100,20,0.3)"/>
+          <!-- Retina background texture -->
+          <circle cx="150" cy="150" r="110" fill="rgba(180,70,10,0.2)"/>
+          <circle cx="150" cy="150" r="80" fill="rgba(200,90,15,0.15)"/>
+          <!-- Optic disc -->
+          <circle cx="200" cy="150" r="22" fill="rgba(255,220,150,0.7)" stroke="rgba(255,200,100,0.5)" stroke-width="2"/>
+          <circle cx="200" cy="150" r="12" fill="rgba(255,240,200,0.5)"/>
+          <!-- Macula -->
+          <circle cx="120" cy="150" r="18" fill="rgba(80,20,0,0.6)"/>
+          <circle cx="120" cy="150" r="8" fill="rgba(40,10,0,0.8)"/>
+          <!-- Vessels from optic disc -->
+          <path d="M178 140 Q155 130 130 125 Q110 120 90 130" stroke="rgba(120,40,10,0.9)" stroke-width="3" fill="none"/>
+          <path d="M178 142 Q160 145 140 140 Q120 135 105 145" stroke="rgba(120,40,10,0.8)" stroke-width="2" fill="none"/>
+          <path d="M178 155 Q160 158 145 168 Q130 178 115 175" stroke="rgba(120,40,10,0.8)" stroke-width="2" fill="none"/>
+          <path d="M178 158 Q165 168 155 180 Q145 192 140 210" stroke="rgba(100,30,8,0.7)" stroke-width="1.5" fill="none"/>
+          <path d="M178 138 Q168 125 165 110 Q162 95 170 80" stroke="rgba(100,30,8,0.7)" stroke-width="1.5" fill="none"/>
+          <path d="M178 136 Q190 120 205 110 Q220 100 230 90" stroke="rgba(100,30,8,0.6)" stroke-width="1" fill="none"/>
+          <!-- Small microaneurysms (pathology) -->
+          <circle cx="145" cy="145" r="3" fill="rgba(200,50,50,0.7)"/>
+          <circle cx="130" cy="165" r="2.5" fill="rgba(200,50,50,0.6)"/>
+          <circle cx="160" cy="170" r="2" fill="rgba(200,50,50,0.5)"/>
+          <!-- Hard exudates -->
+          <circle cx="110" cy="140" r="4" fill="rgba(255,240,150,0.4)"/>
+          <circle cx="105" cy="155" r="3" fill="rgba(255,240,150,0.35)"/>
+          <!-- Border -->
+          <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(0,0,0,0.8)" stroke-width="6"/>
+          <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(210,120,40,0.2)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+    <div class="gradcam-panel">
+      <div class="gradcam-header" style="color:var(--amber)">
+        <svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="2" fill="rgba(255,179,0,0.3)" stroke="var(--amber)" stroke-width="1"/></svg>
+        AI ATTENTION HEATMAP
+      </div>
+      <div class="gradcam-img">
+        <svg class="retina-svg" viewBox="0 0 300 300">
+          <!-- Background -->
+          <circle cx="150" cy="150" r="140" fill="#0a0a0a"/>
+          <!-- Heatmap overlays -->
+          <defs>
+            <radialGradient id="hm1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(255,0,0,0.9)"/>
+              <stop offset="50%" stop-color="rgba(255,100,0,0.5)"/>
+              <stop offset="100%" stop-color="rgba(255,200,0,0.0)"/>
+            </radialGradient>
+            <radialGradient id="hm2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(255,80,0,0.8)"/>
+              <stop offset="60%" stop-color="rgba(255,150,0,0.4)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+            <radialGradient id="hm3" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(200,255,0,0.6)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+            <radialGradient id="hm4" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(0,255,255,0.4)"/>
+              <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+            </radialGradient>
+            <clipPath id="retClip"><circle cx="150" cy="150" r="140"/></clipPath>
+          </defs>
+          <!-- Base retina -->
+          <circle cx="150" cy="150" r="140" fill="#1a0800"/>
+          <!-- Heatmap blobs clipped to retina -->
+          <g clip-path="url(#retClip)">
+            <!-- High activation - microaneurysm region -->
+            <ellipse cx="143" cy="147" rx="35" ry="28" fill="url(#hm1)" opacity="0.95"/>
+            <!-- Medium activation - vessel region -->
+            <ellipse cx="125" cy="165" rx="28" ry="22" fill="url(#hm2)" opacity="0.85"/>
+            <!-- Lower activation - exudate region -->
+            <ellipse cx="108" cy="142" rx="24" ry="20" fill="url(#hm3)" opacity="0.7"/>
+            <ellipse cx="160" cy="168" rx="20" ry="16" fill="url(#hm2)" opacity="0.6"/>
+            <!-- Cool zones -->
+            <ellipse cx="200" cy="150" rx="25" ry="20" fill="url(#hm4)" opacity="0.5"/>
+            <!-- vessel highlight -->
+            <path d="M178 140 Q155 130 130 125 Q110 120 90 130" stroke="rgba(255,200,0,0.4)" stroke-width="4" fill="none"/>
+            <path d="M178 155 Q160 158 145 168 Q130 178 115 175" stroke="rgba(255,150,0,0.3)" stroke-width="3" fill="none"/>
+          </g>
+          <!-- Colored scale bar -->
+          <defs>
+            <linearGradient id="scaleBar" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="rgba(0,0,255,0.9)"/>
+              <stop offset="33%" stop-color="rgba(0,255,255,0.9)"/>
+              <stop offset="66%" stop-color="rgba(255,200,0,0.9)"/>
+              <stop offset="100%" stop-color="rgba(255,0,0,0.9)"/>
+            </linearGradient>
+          </defs>
+          <rect x="60" y="276" width="180" height="8" rx="4" fill="url(#scaleBar)"/>
+          <text x="60" y="292" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Rajdhani" letter-spacing="1">LOW</text>
+          <text x="228" y="292" font-size="8" fill="rgba(255,255,255,0.5)" font-family="Rajdhani" letter-spacing="1" text-anchor="end">HIGH</text>
+          <text x="150" y="292" font-size="8" fill="rgba(255,255,255,0.4)" font-family="Rajdhani" letter-spacing="1" text-anchor="middle">AI ATTENTION</text>
+          <!-- Border -->
+          <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(0,0,0,0.8)" stroke-width="6"/>
+          <circle cx="150" cy="150" r="140" fill="none" stroke="rgba(255,150,0,0.2)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="glass-card" style="padding:20px;margin-top:20px;display:flex;gap:20px;align-items:center">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="var(--cyan)" stroke-width="1.5"/><path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="var(--cyan)" stroke-width="1.5"/></svg>
+    <div>
+      <div style="font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:1.5px;color:var(--cyan);margin-bottom:4px">GRAD-CAM INTERPRETATION</div>
+      <div style="font-size:13px;color:var(--text2)">The heatmap reveals high activation (red zones) concentrated around microaneurysm clusters near the macula and abnormal vessel bifurcations. Yellow-green regions indicate secondary attention on hard exudate boundaries. The model correctly ignores healthy optic disc regions.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- XAI PANEL -->
+<section class="section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Step 04 — Explainability</span>
+    <h2 class="section-title">Trustworthy AI Analysis</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="xai-metrics">
+    <div class="xai-metric glass-card">
+      <div class="xai-metric-label">TRANSPARENCY SCORE</div>
+      <div class="xai-metric-val">92.4%</div>
+      <div class="xai-bar"><div class="xai-bar-fill" style="width:92.4%"></div></div>
+    </div>
+    <div class="xai-metric glass-card">
+      <div class="xai-metric-label">EXPLAINABILITY INDEX</div>
+      <div class="xai-metric-val">88.1%</div>
+      <div class="xai-bar"><div class="xai-bar-fill" style="width:88.1%"></div></div>
+    </div>
+    <div class="xai-metric glass-card">
+      <div class="xai-metric-label">CLINICAL ALIGNMENT</div>
+      <div class="xai-metric-val">94.7%</div>
+      <div class="xai-bar"><div class="xai-bar-fill" style="width:94.7%"></div></div>
+    </div>
+    <div class="xai-metric glass-card">
+      <div class="xai-metric-label">FEATURE FIDELITY</div>
+      <div class="xai-metric-val">91.3%</div>
+      <div class="xai-bar"><div class="xai-bar-fill" style="width:91.3%"></div></div>
+    </div>
+    <div class="xai-metric glass-card">
+      <div class="xai-metric-label">ROBUSTNESS SCORE</div>
+      <div class="xai-metric-val">89.6%</div>
+      <div class="xai-bar"><div class="xai-bar-fill" style="width:89.6%"></div></div>
+    </div>
+    <div class="xai-metric glass-card">
+      <div class="xai-metric-label">OVERALL TRUSTWORTHINESS</div>
+      <div class="xai-metric-val">91.2%</div>
+      <div class="xai-bar"><div class="xai-bar-fill" style="width:91.2%"></div></div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div class="glass-card" style="padding:24px">
+      <div style="font-size:11px;color:var(--cyan);letter-spacing:2px;font-family:var(--font);margin-bottom:16px">AI REASONING SUMMARY</div>
+      <div class="reasoning-box">
+        <div class="reasoning-label">PRIMARY FINDING</div>
+        <div class="reasoning-text">Model focused on abnormal retinal vessel regions exhibiting microaneurysm clustering. High-confidence activation detected in the nasal quadrant, consistent with early-stage diabetic retinopathy pathology.</div>
+      </div>
+      <div class="reasoning-box">
+        <div class="reasoning-label">SECONDARY INDICATORS</div>
+        <div class="reasoning-text">Subtle hard exudate deposits identified near the macular region. Vessel tortuosity within normal limits. Optic disc appearance unremarkable. No neovascularization detected.</div>
+      </div>
+      <div class="reasoning-box">
+        <div class="reasoning-label">CLINICAL RECOMMENDATION</div>
+        <div class="reasoning-text">Early intervention advised. Recommend glycemic control optimization and follow-up fundus examination in 6 months. Referral to ophthalmologist for further evaluation.</div>
+      </div>
+    </div>
+    <div class="glass-card" style="padding:24px">
+      <div style="font-size:11px;color:var(--cyan);letter-spacing:2px;font-family:var(--font);margin-bottom:16px">KEY ATTENTION REGIONS</div>
+      <div class="attention-regions" style="margin-bottom:20px">
+        <div class="region-tag"><div class="region-dot" style="background:var(--red)"></div>Microaneurysms</div>
+        <div class="region-tag"><div class="region-dot" style="background:var(--amber)"></div>Retinal Vessels</div>
+        <div class="region-tag"><div class="region-dot" style="background:#ff8c00"></div>Hard Exudates</div>
+        <div class="region-tag"><div class="region-dot" style="background:var(--cyan)"></div>Optic Disc</div>
+        <div class="region-tag"><div class="region-dot" style="background:var(--teal)"></div>Macula</div>
+        <div class="region-tag"><div class="region-dot" style="background:var(--green)"></div>Background</div>
+      </div>
+      <div style="font-size:11px;color:var(--cyan);letter-spacing:2px;font-family:var(--font);margin-bottom:16px">MODEL ARCHITECTURE</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+          <span style="font-size:12px;font-family:var(--font);letter-spacing:1px">BASE MODEL</span>
+          <span style="font-size:12px;color:var(--cyan);font-family:var(--font)">EfficientNet-B4</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+          <span style="font-size:12px;font-family:var(--font);letter-spacing:1px">XAI METHOD</span>
+          <span style="font-size:12px;color:var(--cyan);font-family:var(--font)">Grad-CAM++</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+          <span style="font-size:12px;font-family:var(--font);letter-spacing:1px">TRAINING DATA</span>
+          <span style="font-size:12px;color:var(--cyan);font-family:var(--font)">APTOS 2019</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+          <span style="font-size:12px;font-family:var(--font);letter-spacing:1px">PARAMETERS</span>
+          <span style="font-size:12px;color:var(--cyan);font-family:var(--font)">19.3M</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ANALYTICS -->
+<section class="section" id="analytics-section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Step 05 — Statistics</span>
+    <h2 class="section-title">Analytics Dashboard</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="stat-cards">
+    <div class="stat-card glass-card">
+      <div class="stat-card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="var(--cyan)" stroke-width="1.5"/><path d="M10 6V10L13 13" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="stat-num">3,847</div>
+      <div class="stat-label">SCANS ANALYZED</div>
+    </div>
+    <div class="stat-card glass-card">
+      <div class="stat-card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.5 7.5H18L13.5 11L15.5 17L10 13.5L4.5 17L6.5 11L2 7.5H7.5L10 2Z" stroke="var(--amber)" stroke-width="1.5" fill="none"/></svg></div>
+      <div class="stat-num" style="color:var(--amber)">97.4%</div>
+      <div class="stat-label">MODEL ACCURACY</div>
+    </div>
+    <div class="stat-card glass-card">
+      <div class="stat-card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10 L8 15 L17 6" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+      <div class="stat-num" style="color:var(--green)">99.1%</div>
+      <div class="stat-label">SENSITIVITY</div>
+    </div>
+    <div class="stat-card glass-card">
+      <div class="stat-card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="var(--teal)" stroke-width="1.5" fill="none"/><path d="M7 10H13M10 7V13" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="stat-num" style="color:var(--teal)">96.8%</div>
+      <div class="stat-label">SPECIFICITY</div>
+    </div>
+  </div>
+  <div class="analytics-grid">
+    <div class="glass-card chart-card">
+      <div class="chart-title">DR SEVERITY DISTRIBUTION — DATASET</div>
+      <div class="bar-chart" id="barChart">
+        <div class="bar-group">
+          <div class="bar-val">1840</div>
+          <div class="bar" style="height:100%;"></div>
+          <div class="bar-label">No DR</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-val">370</div>
+          <div class="bar amber" style="height:38%;"></div>
+          <div class="bar-label">Mild</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-val">999</div>
+          <div class="bar orange" style="height:55%;"></div>
+          <div class="bar-label">Moderate</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-val">193</div>
+          <div class="bar red" style="height:18%;"></div>
+          <div class="bar-label">Severe</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-val">295</div>
+          <div class="bar red" style="height:25%;background:linear-gradient(180deg,#990000,#660000)"></div>
+          <div class="bar-label">Prolif.</div>
+        </div>
+      </div>
+    </div>
+    <div class="glass-card" style="padding:24px;text-align:center">
+      <div class="chart-title" style="margin-bottom:8px">MODEL ACCURACY</div>
+      <div class="gauge-wrap">
+        <svg viewBox="0 0 160 90">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="var(--red)"/>
+              <stop offset="50%" stop-color="var(--amber)"/>
+              <stop offset="100%" stop-color="var(--green)"/>
+            </linearGradient>
+          </defs>
+          <!-- gauge track -->
+          <path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="12" stroke-linecap="round"/>
+          <!-- gauge fill 97.4% -->
+          <path d="M 20 80 A 60 60 0 0 1 140 80" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="5"/>
+          <!-- needle -->
+          <line x1="80" y1="80" x2="20" y2="24" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round" transform="rotate(166,80,80)"/>
+          <circle cx="80" cy="80" r="5" fill="var(--cyan)"/>
+        </svg>
+        <div class="gauge-num">97.4%</div>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-top:4px">Test Set Performance</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px">
+        <div style="background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:10px">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px">AUC-ROC</div>
+          <div style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--cyan)">0.981</div>
+        </div>
+        <div style="background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:10px">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px">F1 SCORE</div>
+          <div style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--teal)">0.963</div>
+        </div>
+        <div style="background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:10px">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px">KAPPA</div>
+          <div style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--amber)">0.941</div>
+        </div>
+        <div style="background:rgba(0,212,255,0.05);border:1px solid var(--border2);border-radius:8px;padding:10px">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1px">MCC</div>
+          <div style="font-family:var(--font);font-size:18px;font-weight:700;color:var(--green)">0.937</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECH STACK -->
+<section class="section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Technology</span>
+    <h2 class="section-title">Built With</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(255,130,0,0.15);border:1px solid rgba(255,130,0,0.3)">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 4L24 8V14C24 19 19 23 14 25C9 23 4 19 4 14V8L14 4Z" stroke="rgba(255,130,0,0.9)" stroke-width="1.5" fill="rgba(255,130,0,0.1)"/>
+          <circle cx="14" cy="14" r="4" fill="rgba(255,130,0,0.7)"/>
+        </svg>
+      </div>
+      <div class="tech-name">TensorFlow</div>
+      <div class="tech-desc">Deep learning framework for model training & inference</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25)">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="4" y="4" width="20" height="20" rx="3" stroke="var(--cyan)" stroke-width="1.5" fill="rgba(0,212,255,0.08)"/>
+          <circle cx="10" cy="10" r="2" fill="var(--cyan)"/>
+          <circle cx="18" cy="10" r="2" fill="var(--cyan)" opacity=".6"/>
+          <path d="M6 18 Q14 12 22 18" stroke="var(--cyan)" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <div class="tech-name">OpenCV</div>
+      <div class="tech-desc">Computer vision preprocessing and image augmentation</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(255,0,100,0.1);border:1px solid rgba(255,0,100,0.25)">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M14 6L22 14L14 22L6 14Z" stroke="rgba(255,80,150,0.9)" stroke-width="1.5" fill="rgba(255,0,100,0.1)"/>
+          <circle cx="14" cy="14" r="3" fill="rgba(255,80,150,0.8)"/>
+          <path d="M6 14H22M14 6V22" stroke="rgba(255,80,150,0.4)" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="tech-name">Grad-CAM</div>
+      <div class="tech-desc">Gradient-weighted class activation mapping for XAI</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(26,107,255,0.1);border:1px solid rgba(26,107,255,0.3)">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="5" y="5" width="7" height="7" rx="1" fill="rgba(26,107,255,0.8)"/>
+          <rect x="16" y="5" width="7" height="7" rx="1" fill="rgba(26,107,255,0.5)"/>
+          <rect x="5" y="16" width="7" height="7" rx="1" fill="rgba(26,107,255,0.5)"/>
+          <rect x="16" y="16" width="7" height="7" rx="1" fill="rgba(26,107,255,0.8)"/>
+        </svg>
+      </div>
+      <div class="tech-name">CNN</div>
+      <div class="tech-desc">Convolutional neural networks for feature extraction</div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon" style="background:rgba(0,255,208,0.1);border:1px solid rgba(0,255,208,0.25)">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="8" stroke="var(--teal)" stroke-width="1.5" fill="rgba(0,255,208,0.08)"/>
+          <path d="M10 14C10 14 12 11 14 14C16 17 18 14 18 14" stroke="var(--teal)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <circle cx="14" cy="14" r="2" fill="var(--teal)" opacity=".5"/>
+        </svg>
+      </div>
+      <div class="tech-name">Trustworthy AI</div>
+      <div class="tech-desc">Fairness, transparency & accountability frameworks</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;justify-content:center">
+    <span class="format-tag">Python 3.10</span>
+    <span class="format-tag">Keras</span>
+    <span class="format-tag">Scikit-learn</span>
+    <span class="format-tag">NumPy</span>
+    <span class="format-tag">Pandas</span>
+    <span class="format-tag">Matplotlib</span>
+    <span class="format-tag">LIME</span>
+    <span class="format-tag">SHAP</span>
+    <span class="format-tag">Flask</span>
+    <span class="format-tag">Docker</span>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FUTURE SCOPE -->
+<section class="section">
+<div class="container">
+  <div class="section-header">
+    <span class="section-label">Roadmap</span>
+    <h2 class="section-title">Future Scope</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="future-grid">
+    <div class="future-card glass-card">
+      <div class="future-icon">🤖</div>
+      <div class="future-name">AI Medical Assistant</div>
+      <div class="future-desc">Conversational AI for patient consultation and diagnostic Q&A</div>
+      <span class="future-tag">v2.0</span>
+    </div>
+    <div class="future-card glass-card">
+      <div class="future-icon">☁️</div>
+      <div class="future-name">Cloud Deployment</div>
+      <div class="future-desc">Scalable AWS/GCP deployment with real-time inference API</div>
+      <span class="future-tag">v1.5</span>
+    </div>
+    <div class="future-card glass-card">
+      <div class="future-icon">👨‍⚕️</div>
+      <div class="future-name">Doctor Dashboard</div>
+      <div class="future-desc">Clinician portal with patient history and comparative analysis</div>
+      <span class="future-tag">v1.8</span>
+    </div>
+    <div class="future-card glass-card">
+      <div class="future-icon">📄</div>
+      <div class="future-name">PDF Reports</div>
+      <div class="future-desc">Automated clinical report generation with Grad-CAM visuals</div>
+      <span class="future-tag">v1.4</span>
+    </div>
+    <div class="future-card glass-card">
+      <div class="future-icon">🔬</div>
+      <div class="future-name">Tumor Analysis</div>
+      <div class="future-desc">Extended pathology detection for retinal tumors and AMD</div>
+      <span class="future-tag">v3.0</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+<div class="container">
+  <div class="footer-logo">KIARA</div>
+  <div class="footer-sub">Knowledge-based Intelligent Analysis for Retinal Assessment</div>
+  <div class="footer-links">
+    <a>Research Paper</a>
+    <a>Documentation</a>
+    <a>Dataset</a>
+    <a>GitHub</a>
+    <a>Contact</a>
+  </div>
+  <div style="display:flex;gap:20px;justify-content:center;margin-bottom:20px">
+    <div style="text-align:center;padding:12px 20px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1.5px">FRAMEWORK</div>
+      <div style="font-size:13px;color:var(--text2);font-family:var(--font);font-weight:600">TensorFlow 2.x</div>
+    </div>
+    <div style="text-align:center;padding:12px 20px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1.5px">DATASET</div>
+      <div style="font-size:13px;color:var(--text2);font-family:var(--font);font-weight:600">APTOS 2019</div>
+    </div>
+    <div style="text-align:center;padding:12px 20px;background:rgba(0,212,255,0.04);border:1px solid var(--border2);border-radius:8px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:1.5px">XAI METHOD</div>
+      <div style="font-size:13px;color:var(--text2);font-family:var(--font);font-weight:600">Grad-CAM++</div>
+    </div>
+  </div>
+  <div class="footer-copy">© 2025 KIARA — AI Healthcare Research Project · All Rights Reserved</div>
+</div>
+</footer>
+
+<script>
+function handleFile(input){
+  if(!input.files||!input.files[0])return;
+  const file=input.files[0];
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const area=document.getElementById('previewArea');
+    area.innerHTML=`<img src="${e.target.result}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`;
+    document.getElementById('previewStatus').textContent='Ready for analysis';
+    document.getElementById('previewStatus').style.color='var(--green)';
+    document.getElementById('previewFormat').textContent=file.type.split('/')[1].toUpperCase();
+    document.getElementById('previewSize').textContent=(file.size/1024).toFixed(1)+' KB';
+    document.getElementById('previewQuality').textContent='Good';
+  };
+  reader.readAsDataURL(file);
+}
+
+const dropZone=document.getElementById('dropZone');
+dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('drag')});
+dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('drag'));
+dropZone.addEventListener('drop',e=>{
+  e.preventDefault();dropZone.classList.remove('drag');
+  const file=e.dataTransfer.files[0];
+  if(file&&file.type.startsWith('image/')){
+    const fi=document.getElementById('fileInput');
+    const dt=new DataTransfer();dt.items.add(file);fi.files=dt.files;
+    handleFile(fi);
+  }
+});
+
+const results=[
+  {status:'NO DR',desc:'No signs of diabetic retinopathy detected',cls:'status-healthy',sev:5,risk:'NONE',risk_color:'var(--green)',lesions:0,conf:98},
+  {status:'MILD DR',desc:'Early-stage diabetic retinopathy detected',cls:'status-mild',sev:30,risk:'LOW',risk_color:'var(--amber)',lesions:3,conf:94},
+  {status:'MODERATE DR',desc:'Moderate diabetic retinopathy — monitor closely',cls:'status-moderate',sev:60,risk:'MODERATE',risk_color:'#ff8c00',lesions:8,conf:89},
+  {status:'SEVERE DR',desc:'Severe DR detected — urgent ophthalmology referral',cls:'status-severe',sev:90,risk:'HIGH',risk_color:'var(--red)',lesions:15,conf:96}
+];
+
+function setResult(i){
+  document.querySelectorAll('.severity-level').forEach((el,j)=>el.classList.toggle('active',j===i));
+  const r=results[i];
+  const ps=document.getElementById('predStatus');
+  ps.className='pred-status '+r.cls;
+  ps.textContent=r.status;
+  document.getElementById('predDesc').textContent=r.desc;
+  document.getElementById('sevFill').style.width=r.sev+'%';
+  document.getElementById('riskLevel').textContent=r.risk;
+  document.getElementById('riskLevel').style.color=r.risk_color;
+  document.getElementById('lesionCount').textContent=r.lesions;
+  const pct=Math.round(326.7*(1-r.conf/100));
+  document.getElementById('confRing').setAttribute('stroke-dashoffset',pct);
+  document.getElementById('confVal').innerHTML=r.conf+'%<span class="ring-sub">CONF.</span>';
+}
+
+function runAnalysis(){
+  const idx=Math.floor(Math.random()*4);
+  setResult(idx);
+  document.getElementById('prediction-section').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

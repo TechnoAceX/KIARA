@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIARA — Retinal AI Assessment</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Syne:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="logo-eye">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="22" cy="22" rx="20" ry="12" stroke="url(#eyeGrad)" stroke-width="1.5"/>
+            <circle cx="22" cy="22" r="6" fill="url(#pupilGrad)" opacity="0.9"/>
+            <circle cx="22" cy="22" r="3" fill="#00f5ff" opacity="0.7"/>
+            <circle cx="20" cy="20" r="1" fill="white" opacity="0.9"/>
+            <line x1="2" y1="22" x2="8" y2="22" stroke="#00f5ff" stroke-width="1" opacity="0.6"/>
+            <line x1="36" y1="22" x2="42" y2="22" stroke="#00f5ff" stroke-width="1" opacity="0.6"/>
+            <defs>
+              <linearGradient id="eyeGrad" x1="2" y1="10" x2="42" y2="34" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#00f5ff"/>
+                <stop offset="100%" stop-color="#0066ff"/>
+              </linearGradient>
+              <radialGradient id="pupilGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#0033cc"/>
+                <stop offset="100%" stop-color="#001a66"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">KIARA</span>
+          <span class="logo-sub">Retinal AI Assessment</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#dashboard" class="nav-link active" data-label="01">Dashboard</a></li>
+        <li><a href="#analysis" class="nav-link" data-label="02">Analysis</a></li>
+        <li><a href="#reports" class="nav-link" data-label="03">Reports</a></li>
+        <li><a href="#research" class="nav-link" data-label="04">Research</a></li>
+      </ul>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span class="status-text">System Online</span>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero" id="dashboard">
+    <div class="hero-bg">
+      <canvas id="heroCanvas"></canvas>
+      <div class="hero-grid"></div>
+      <div class="hero-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        AI-Powered Diagnostic System v2.4
+      </div>
+      <h1 class="hero-title">
+        <span class="title-line">Trustworthy AI-Powered</span>
+        <span class="title-line accent">Retinal Assessment</span>
+      </h1>
+      <p class="hero-desc">
+        Advanced deep learning analysis with explainable AI — delivering clinically reliable diabetic retinopathy detection with Grad-CAM transparency and confidence-calibrated predictions.
+      </p>
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-val" data-target="97.8">0</div>
+          <div class="hstat-unit">%</div>
+          <div class="hstat-label">Model Accuracy</div>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <div class="hstat-val" data-target="12400">0</div>
+          <div class="hstat-unit">+</div>
+          <div class="hstat-label">Scans Analyzed</div>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <div class="hstat-val" data-target="99.2">0</div>
+          <div class="hstat-unit">%</div>
+          <div class="hstat-label">Sensitivity</div>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <div class="hstat-val" data-target="0.3">0</div>
+          <div class="hstat-unit">s</div>
+          <div class="hstat-label">Inference Time</div>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('analysis').scrollIntoView({behavior:'smooth'})">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Start Analysis
+        </button>
+        <button class="btn-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          View Demo
+        </button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="retinal-ring-system">
+        <div class="ring ring-outer"></div>
+        <div class="ring ring-mid"></div>
+        <div class="ring ring-inner"></div>
+        <div class="retinal-core">
+          <svg viewBox="0 0 200 200" class="eye-svg">
+            <defs>
+              <radialGradient id="retGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#003366"/>
+                <stop offset="40%" stop-color="#001a44"/>
+                <stop offset="100%" stop-color="#000d22"/>
+              </radialGradient>
+              <radialGradient id="glowRad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00f5ff" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#00f5ff" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle cx="100" cy="100" r="95" fill="url(#retGrad)" stroke="#00f5ff" stroke-width="0.5" stroke-opacity="0.4"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="#0066ff" stroke-width="0.3" stroke-opacity="0.3"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="#00f5ff" stroke-width="0.3" stroke-opacity="0.2"/>
+            <!-- Blood vessels -->
+            <g stroke="#cc3300" stroke-width="0.8" fill="none" opacity="0.6">
+              <path d="M100,100 Q120,80 140,60"/>
+              <path d="M100,100 Q80,75 55,55"/>
+              <path d="M100,100 Q125,110 150,130"/>
+              <path d="M100,100 Q85,120 65,145"/>
+              <path d="M100,100 Q110,125 115,155"/>
+              <path d="M100,100 Q70,105 40,100"/>
+              <path d="M100,100 Q130,95 160,90"/>
+              <path d="M100,100 Q105,70 110,40"/>
+            </g>
+            <!-- Optic disc -->
+            <circle cx="130" cy="100" r="14" fill="#ffcc88" fill-opacity="0.6" stroke="#ff9944" stroke-width="0.5"/>
+            <circle cx="130" cy="100" r="7" fill="#ff8833" fill-opacity="0.7"/>
+            <!-- Fovea -->
+            <circle cx="85" cy="100" r="5" fill="none" stroke="#ffdd99" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="85" cy="100" r="2" fill="#ffdd99" fill-opacity="0.4"/>
+            <!-- Scan lines -->
+            <line x1="5" y1="100" x2="195" y2="100" stroke="#00f5ff" stroke-width="0.3" stroke-opacity="0.15" stroke-dasharray="3,6"/>
+            <line x1="100" y1="5" x2="100" y2="195" stroke="#00f5ff" stroke-width="0.3" stroke-opacity="0.15" stroke-dasharray="3,6"/>
+            <!-- Glow center -->
+            <circle cx="100" cy="100" r="50" fill="url(#glowRad)"/>
+          </svg>
+        </div>
+        <div class="scan-line"></div>
+        <!-- Data readouts -->
+        <div class="readout readout-tl">
+          <span class="ro-label">OPTIC DISC</span>
+          <span class="ro-val">Normal</span>
+        </div>
+        <div class="readout readout-tr">
+          <span class="ro-label">MACULA</span>
+          <span class="ro-val">Clear</span>
+        </div>
+        <div class="readout readout-bl">
+          <span class="ro-label">VESSELS</span>
+          <span class="ro-val">Intact</span>
+        </div>
+        <div class="readout readout-br">
+          <span class="ro-label">DR GRADE</span>
+          <span class="ro-val cyan">0 — Healthy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ANALYSIS SECTION ═══════════════ -->
+  <section class="section" id="analysis">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// DIAGNOSTIC ENGINE</span>
+        <h2 class="section-title">Retinal Analysis Console</h2>
+        <p class="section-sub">Upload a fundus photograph for instant AI-powered diabetic retinopathy grading</p>
+      </div>
+
+      <div class="analysis-grid">
+
+        <!-- Upload Panel -->
+        <div class="glass-card upload-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <span class="card-title">Retinal Image Upload</span>
+            <div class="card-badge">READY</div>
+          </div>
+          <div class="upload-zone" id="uploadZone">
+            <div class="upload-inner">
+              <div class="upload-icon-wrap">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M11 8v6M8 11h6"/><path d="m21 21-4.35-4.35"/></svg>
+              </div>
+              <p class="upload-primary">Drop fundus image here</p>
+              <p class="upload-secondary">Supports JPEG, PNG, TIFF · Max 20MB</p>
+              <label class="btn-upload" for="fileInput">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Browse Files
+              </label>
+              <input type="file" id="fileInput" accept="image/*" hidden />
+            </div>
+          </div>
+          <div class="preview-section" id="previewSection" style="display:none">
+            <div class="preview-wrap">
+              <img id="previewImg" src="" alt="Retinal Scan Preview" />
+              <div class="preview-overlay">
+                <div class="scan-anim" id="scanAnim"></div>
+              </div>
+              <div class="preview-badge" id="previewBadge">SCANNING…</div>
+            </div>
+            <div class="scan-status" id="scanStatus">
+              <div class="status-steps">
+                <div class="sstep active" id="step1"><span class="sstep-dot"></span>Image Preprocessing</div>
+                <div class="sstep" id="step2"><span class="sstep-dot"></span>Feature Extraction</div>
+                <div class="sstep" id="step3"><span class="sstep-dot"></span>CNN Inference</div>
+                <div class="sstep" id="step4"><span class="sstep-dot"></span>Grad-CAM Generation</div>
+                <div class="sstep" id="step5"><span class="sstep-dot"></span>Report Compilation</div>
+              </div>
+            </div>
+            <button class="btn-primary full-btn" id="analyzeBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Run AI Analysis
+            </button>
+          </div>
+        </div>
+
+        <!-- Prediction Panel -->
+        <div class="glass-card prediction-card" id="predictionCard">
+          <div class="card-header">
+            <div class="card-icon cyan">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/></svg>
+            </div>
+            <span class="card-title">AI Prediction Results</span>
+            <div class="card-badge waiting" id="predBadge">AWAITING INPUT</div>
+          </div>
+          <div class="prediction-body" id="predictionBody">
+            <div class="pred-idle">
+              <div class="idle-rings">
+                <div class="idle-ring"></div>
+                <div class="idle-ring"></div>
+                <div class="idle-ring"></div>
+              </div>
+              <p>Upload a retinal scan to begin analysis</p>
+            </div>
+          </div>
+          <div class="prediction-result" id="predictionResult" style="display:none">
+            <div class="result-main">
+              <div class="result-label-wrap">
+                <div class="result-diagnosis" id="resultDiagnosis">Healthy</div>
+                <div class="result-grade" id="resultGrade">DR Grade 0</div>
+              </div>
+              <div class="result-badge-wrap">
+                <div class="conf-ring">
+                  <svg viewBox="0 0 80 80" class="conf-svg">
+                    <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(0,245,255,0.1)" stroke-width="5"/>
+                    <circle cx="40" cy="40" r="32" fill="none" stroke="url(#confGrad)" stroke-width="5"
+                      stroke-dasharray="201" stroke-dashoffset="201" id="confCircle"
+                      stroke-linecap="round" transform="rotate(-90 40 40)"/>
+                    <defs>
+                      <linearGradient id="confGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#00f5ff"/>
+                        <stop offset="100%" stop-color="#0066ff"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div class="conf-val" id="confVal">0%</div>
+                </div>
+                <span class="conf-label">Confidence</span>
+              </div>
+            </div>
+            <div class="severity-bar-wrap">
+              <div class="sev-header">
+                <span>Disease Severity</span>
+                <span id="sevLabel" class="sev-label-val">None</span>
+              </div>
+              <div class="sev-track">
+                <div class="sev-fill" id="sevFill"></div>
+                <div class="sev-markers">
+                  <span>None</span><span>Mild</span><span>Moderate</span><span>Severe</span><span>PDR</span>
+                </div>
+              </div>
+            </div>
+            <div class="health-indicators">
+              <div class="indicator" id="ind-haem">
+                <div class="ind-icon"></div>
+                <div class="ind-info">
+                  <span class="ind-name">Haemorrhages</span>
+                  <span class="ind-val" id="ind-haem-val">None Detected</span>
+                </div>
+                <div class="ind-status green" id="ind-haem-status">✓</div>
+              </div>
+              <div class="indicator" id="ind-exudate">
+                <div class="ind-icon"></div>
+                <div class="ind-info">
+                  <span class="ind-name">Exudates</span>
+                  <span class="ind-val" id="ind-exudate-val">None Detected</span>
+                </div>
+                <div class="ind-status green" id="ind-exudate-status">✓</div>
+              </div>
+              <div class="indicator" id="ind-neo">
+                <div class="ind-icon"></div>
+                <div class="ind-info">
+                  <span class="ind-name">Neovascularization</span>
+                  <span class="ind-val" id="ind-neo-val">None Detected</span>
+                </div>
+                <div class="ind-status green" id="ind-neo-status">✓</div>
+              </div>
+              <div class="indicator" id="ind-macula">
+                <div class="ind-icon"></div>
+                <div class="ind-info">
+                  <span class="ind-name">Macular Edema</span>
+                  <span class="ind-val" id="ind-macula-val">None Detected</span>
+                </div>
+                <div class="ind-status green" id="ind-macula-status">✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grad-CAM Section -->
+      <div class="gradcam-section" id="gradcamSection" style="display:none">
+        <div class="section-header small-header">
+          <span class="section-tag">// EXPLAINABILITY</span>
+          <h3 class="section-title">Grad-CAM Visualization</h3>
+        </div>
+        <div class="gradcam-grid">
+          <div class="glass-card gradcam-card">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <span class="card-title">Original Scan</span>
+              <div class="card-badge">RAW INPUT</div>
+            </div>
+            <div class="gradcam-img-wrap">
+              <img id="gradcamOriginal" src="" alt="Original Scan" />
+              <div class="img-overlay-label">Fundus Photograph</div>
+            </div>
+            <div class="gradcam-meta">
+              <div class="gmeta"><span>Resolution</span><span id="imgRes">—</span></div>
+              <div class="gmeta"><span>Color Space</span><span>RGB</span></div>
+              <div class="gmeta"><span>Preprocessed</span><span>224×224</span></div>
+            </div>
+          </div>
+          <div class="gradcam-arrow">
+            <div class="arrow-line"></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00f5ff" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span>AI Processing</span>
+          </div>
+          <div class="glass-card gradcam-card">
+            <div class="card-header">
+              <div class="card-icon cyan">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <span class="card-title">AI Attention Heatmap</span>
+              <div class="card-badge cyan-badge">GRAD-CAM</div>
+            </div>
+            <div class="gradcam-img-wrap heatmap-wrap">
+              <img id="gradcamOriginal2" src="" alt="Heatmap" class="heatmap-base" />
+              <canvas id="heatmapCanvas" class="heatmap-canvas"></canvas>
+              <div class="img-overlay-label cyan-label">Attention Regions</div>
+            </div>
+            <div class="gradcam-meta">
+              <div class="gmeta"><span>High Attention</span><span class="red-text">Red Zones</span></div>
+              <div class="gmeta"><span>Moderate</span><span class="yellow-text">Yellow Zones</span></div>
+              <div class="gmeta"><span>Low Attention</span><span class="cyan-text">Blue Zones</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trustworthy AI -->
+      <div class="trustworthy-section" id="reports">
+        <div class="section-header small-header">
+          <span class="section-tag">// EXPLAINABLE AI</span>
+          <h3 class="section-title">Trustworthy AI Insights</h3>
+        </div>
+        <div class="trust-grid">
+          <div class="glass-card trust-reasoning">
+            <div class="card-header">
+              <div class="card-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <span class="card-title">AI Reasoning Summary</span>
+            </div>
+            <div class="reasoning-body">
+              <div class="reasoning-item">
+                <div class="ri-dot"></div>
+                <div class="ri-text">
+                  <span class="ri-title">Optic Disc Analysis</span>
+                  <span class="ri-desc">Model detected a well-defined optic disc with normal cup-to-disc ratio. No swelling or pallor detected in the disc region.</span>
+                </div>
+              </div>
+              <div class="reasoning-item">
+                <div class="ri-dot"></div>
+                <div class="ri-text">
+                  <span class="ri-title">Vascular Assessment</span>
+                  <span class="ri-desc">Retinal blood vessels show regular caliber and branching pattern. No arteriovenous nicking or microaneurysms identified.</span>
+                </div>
+              </div>
+              <div class="reasoning-item">
+                <div class="ri-dot"></div>
+                <div class="ri-text">
+                  <span class="ri-title">Macular Region</span>
+                  <span class="ri-desc">Foveal reflex intact. No hard exudates, cotton wool spots, or macular edema detected in the central field.</span>
+                </div>
+              </div>
+              <div class="reasoning-item">
+                <div class="ri-dot"></div>
+                <div class="ri-text">
+                  <span class="ri-title">Peripheral Retina</span>
+                  <span class="ri-desc">Peripheral zones show no signs of neovascularization, laser scars, or traction. Background appears healthy.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="trust-metrics">
+            <div class="glass-card trust-metric-card">
+              <div class="tm-label">Transparency Score</div>
+              <div class="tm-visual">
+                <div class="radial-meter" data-value="92">
+                  <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,245,255,0.1)" stroke-width="8"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="url(#tmGrad1)" stroke-width="8"
+                      stroke-dasharray="251" stroke-dashoffset="20" stroke-linecap="round"
+                      transform="rotate(-90 50 50)" class="meter-arc"/>
+                    <defs>
+                      <linearGradient id="tmGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#00f5ff"/><stop offset="100%" stop-color="#0066ff"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                  <div class="rm-val">92<span>%</span></div>
+                </div>
+              </div>
+              <div class="tm-desc">Grad-CAM explanations traceable to clinical features</div>
+            </div>
+            <div class="glass-card trust-metric-card">
+              <div class="tm-label">Reliability Score</div>
+              <div class="reliability-bar-wrap">
+                <div class="rel-bar-container">
+                  <div class="rel-segment" data-w="88" style="--color:#00f5ff">
+                    <div class="rel-fill"></div>
+                    <span>Accuracy</span>
+                    <span>88%</span>
+                  </div>
+                  <div class="rel-segment" data-w="94" style="--color:#0099ff">
+                    <div class="rel-fill"></div>
+                    <span>Precision</span>
+                    <span>94%</span>
+                  </div>
+                  <div class="rel-segment" data-w="91" style="--color:#00ccff">
+                    <div class="rel-fill"></div>
+                    <span>Recall</span>
+                    <span>91%</span>
+                  </div>
+                  <div class="rel-segment" data-w="96" style="--color:#33ddff">
+                    <div class="rel-fill"></div>
+                    <span>AUC-ROC</span>
+                    <span>96%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="glass-card trust-metric-card">
+              <div class="tm-label">Confidence Calibration</div>
+              <div class="calib-grid">
+                <div class="calib-item healthy">
+                  <div class="calib-bar" style="--h:78%"></div>
+                  <span>Healthy</span>
+                  <span>97%</span>
+                </div>
+                <div class="calib-item mild">
+                  <div class="calib-bar" style="--h:60%"></div>
+                  <span>Mild</span>
+                  <span>89%</span>
+                </div>
+                <div class="calib-item moderate">
+                  <div class="calib-bar" style="--h:48%"></div>
+                  <span>Moderate</span>
+                  <span>85%</span>
+                </div>
+                <div class="calib-item severe">
+                  <div class="calib-bar" style="--h:35%"></div>
+                  <span>Severe</span>
+                  <span>82%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ANALYTICS ═══════════════ -->
+  <section class="section analytics-section" id="research">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// PERFORMANCE METRICS</span>
+        <h2 class="section-title">Analytics Dashboard</h2>
+        <p class="section-sub">Real-time model performance and retinal analysis statistics</p>
+      </div>
+      <div class="analytics-grid">
+        <div class="glass-card analytics-card big-chart">
+          <div class="card-header">
+            <div class="card-icon cyan"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <span class="card-title">Model Accuracy Over Training</span>
+            <div class="card-badge cyan-badge">LIVE</div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="accuracyChart"></canvas>
+          </div>
+        </div>
+        <div class="glass-card analytics-card">
+          <div class="card-header">
+            <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+            <span class="card-title">Severity Distribution</span>
+          </div>
+          <div class="chart-wrap donut-wrap">
+            <canvas id="donutChart"></canvas>
+            <div class="donut-center">
+              <span class="dc-val">12.4K</span>
+              <span class="dc-label">Total Scans</span>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="dl-item"><span class="dl-dot" style="background:#00f5ff"></span>Healthy<span class="dl-pct">58%</span></div>
+            <div class="dl-item"><span class="dl-dot" style="background:#0099ff"></span>Mild DR<span class="dl-pct">21%</span></div>
+            <div class="dl-item"><span class="dl-dot" style="background:#ff9900"></span>Moderate<span class="dl-pct">13%</span></div>
+            <div class="dl-item"><span class="dl-dot" style="background:#ff3300"></span>Severe<span class="dl-pct">8%</span></div>
+          </div>
+        </div>
+        <div class="analytics-stat-col">
+          <div class="glass-card stat-mini">
+            <div class="sm-icon cyan"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div class="sm-body">
+              <div class="sm-val counter" data-target="97.8">97.8</div>
+              <div class="sm-unit">%</div>
+              <div class="sm-label">Test Accuracy</div>
+            </div>
+            <div class="sm-trend up">↑ 0.4%</div>
+          </div>
+          <div class="glass-card stat-mini">
+            <div class="sm-icon blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="sm-body">
+              <div class="sm-val">0.31</div>
+              <div class="sm-unit">s</div>
+              <div class="sm-label">Avg Inference</div>
+            </div>
+            <div class="sm-trend up">↓ 0.05s</div>
+          </div>
+          <div class="glass-card stat-mini">
+            <div class="sm-icon purple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="sm-body">
+              <div class="sm-val counter" data-target="12400">12.4K</div>
+              <div class="sm-unit"></div>
+              <div class="sm-label">Patients Scanned</div>
+            </div>
+            <div class="sm-trend up">↑ 342 this week</div>
+          </div>
+          <div class="glass-card stat-mini">
+            <div class="sm-icon green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+            <div class="sm-body">
+              <div class="sm-val">0.963</div>
+              <div class="sm-unit"></div>
+              <div class="sm-label">AUC-ROC Score</div>
+            </div>
+            <div class="sm-trend up">↑ 0.012</div>
+          </div>
+        </div>
+        <div class="glass-card analytics-card bar-chart-card">
+          <div class="card-header">
+            <div class="card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+            <span class="card-title">Weekly Scan Volume</span>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="barChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TECH STACK ═══════════════ -->
+  <section class="section tech-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// TECHNOLOGY</span>
+        <h2 class="section-title">Technology Stack</h2>
+        <p class="section-sub">Powered by state-of-the-art AI infrastructure and medical imaging frameworks</p>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-card glass-card">
+          <div class="tech-icon tf">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 4L6 14v20l18 10 18-10V14L24 4z" stroke="#ff8800" stroke-width="1.5" fill="none" opacity="0.4"/>
+              <path d="M24 4v40M6 14l18 10 18-10" stroke="#ff8800" stroke-width="1.5" opacity="0.6"/>
+              <text x="24" y="28" text-anchor="middle" fill="#ff8800" font-size="11" font-weight="bold">TF</text>
+            </svg>
+          </div>
+          <div class="tech-name">TensorFlow</div>
+          <div class="tech-desc">Deep learning framework powering the CNN classification model with Keras high-level API</div>
+          <div class="tech-tag">v2.13</div>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-icon cv">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="18" stroke="#00aa44" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="24" cy="24" r="10" stroke="#00aa44" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="24" cy="24" r="3" fill="#00aa44"/>
+              <line x1="6" y1="24" x2="14" y2="24" stroke="#00aa44" stroke-width="1.5"/>
+              <line x1="34" y1="24" x2="42" y2="24" stroke="#00aa44" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="tech-name">OpenCV</div>
+          <div class="tech-desc">Computer vision library for image preprocessing, CLAHE enhancement, and retinal segmentation</div>
+          <div class="tech-tag">v4.8</div>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-icon cnn">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="4" y="16" width="8" height="16" rx="2" stroke="#00f5ff" stroke-width="1.5" opacity="0.5"/>
+              <rect x="16" y="12" width="8" height="24" rx="2" stroke="#00f5ff" stroke-width="1.5" opacity="0.7"/>
+              <rect x="28" y="8" width="8" height="32" rx="2" stroke="#00f5ff" stroke-width="1.5" opacity="0.9"/>
+              <rect x="40" y="14" width="5" height="20" rx="2" stroke="#00f5ff" stroke-width="1.5" opacity="0.6"/>
+              <line x1="12" y1="24" x2="16" y2="24" stroke="#00f5ff" stroke-width="1" opacity="0.5"/>
+              <line x1="24" y1="24" x2="28" y2="24" stroke="#00f5ff" stroke-width="1" opacity="0.5"/>
+              <line x1="36" y1="24" x2="40" y2="24" stroke="#00f5ff" stroke-width="1" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="tech-name">CNN Architecture</div>
+          <div class="tech-desc">Custom EfficientNet-B3 convolutional neural network fine-tuned on APTOS 2019 retinal dataset</div>
+          <div class="tech-tag">EfficientNet-B3</div>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-icon gcam">
+            <svg viewBox="0 0 48 48" fill="none">
+              <rect x="6" y="6" width="36" height="36" rx="4" stroke="#ff4400" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="24" cy="24" r="10" fill="none" stroke="#ff6600" stroke-width="1.5" opacity="0.5"/>
+              <circle cx="24" cy="24" r="5" fill="none" stroke="#ff8800" stroke-width="1.5" opacity="0.7"/>
+              <circle cx="24" cy="24" r="2" fill="#ffaa00"/>
+            </svg>
+          </div>
+          <div class="tech-name">Grad-CAM</div>
+          <div class="tech-desc">Gradient-weighted Class Activation Mapping for visual explanations of model predictions</div>
+          <div class="tech-tag">XAI Method</div>
+        </div>
+        <div class="tech-card glass-card featured-tech">
+          <div class="tech-icon trust">
+            <svg viewBox="0 0 48 48" fill="none">
+              <path d="M24 4l6 10h10l-8 8 4 12-12-6-12 6 4-12-8-8h10z" stroke="#aa00ff" stroke-width="1.5" fill="none" opacity="0.5"/>
+              <circle cx="24" cy="24" r="6" stroke="#cc44ff" stroke-width="1.5" opacity="0.7"/>
+              <path d="M20 24l3 3 6-6" stroke="#cc44ff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tech-name">Trustworthy AI</div>
+          <div class="tech-desc">Fairness-aware training, uncertainty quantification, and bias mitigation for clinical reliability</div>
+          <div class="tech-tag featured-tag">Core Framework</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FUTURE SCOPE ═══════════════ -->
+  <section class="section future-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// ROADMAP</span>
+        <h2 class="section-title">Future Scope</h2>
+        <p class="section-sub">Expanding KIARA's capabilities toward a complete retinal health intelligence platform</p>
+      </div>
+      <div class="future-grid">
+        <div class="future-card glass-card">
+          <div class="future-num">01</div>
+          <div class="future-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M22 2 12 12"/></svg>
+          </div>
+          <div class="future-title">AI Medical Assistant</div>
+          <div class="future-desc">Conversational AI interface for symptom guidance, appointment scheduling, and patient education powered by LLMs integrated with KIARA's diagnostic output.</div>
+          <div class="future-tags">
+            <span>LLM Integration</span><span>NLP</span><span>Chat UI</span>
+          </div>
+        </div>
+        <div class="future-card glass-card">
+          <div class="future-num">02</div>
+          <div class="future-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <div class="future-title">PDF Report Generation</div>
+          <div class="future-desc">Automated clinical report generation with Grad-CAM overlays, diagnostic findings, severity staging, and referral recommendations exportable as structured PDF documents.</div>
+          <div class="future-tags">
+            <span>ReportLab</span><span>Clinical Format</span><span>HL7</span>
+          </div>
+        </div>
+        <div class="future-card glass-card">
+          <div class="future-num">03</div>
+          <div class="future-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8h10M7 12h6"/></svg>
+          </div>
+          <div class="future-title">Doctor Dashboard</div>
+          <div class="future-desc">Dedicated ophthalmologist portal with patient management, longitudinal tracking, multi-scan comparison tools, and a second-opinion collaboration network for specialists.</div>
+          <div class="future-tags">
+            <span>Multi-user</span><span>EMR</span><span>HIPAA</span>
+          </div>
+        </div>
+        <div class="future-card glass-card">
+          <div class="future-num">04</div>
+          <div class="future-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </div>
+          <div class="future-title">Cloud Deployment</div>
+          <div class="future-desc">Scalable cloud infrastructure on AWS/GCP with containerized inference via Docker, auto-scaling, DICOM integration, and FHIR-compliant data exchange for hospital systems.</div>
+          <div class="future-tags">
+            <span>AWS/GCP</span><span>Docker</span><span>FHIR</span>
+          </div>
+        </div>
+        <div class="future-card glass-card featured-future">
+          <div class="future-num">05</div>
+          <div class="future-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="future-title">Retinal Tumor Detection</div>
+          <div class="future-desc">Expansion to detect retinoblastoma, choroidal melanoma, and retinal hemangiomas using multi-task learning, extending KIARA into a comprehensive retinal oncology screening platform.</div>
+          <div class="future-tags">
+            <span>Oncology AI</span><span>Multi-task</span><span>OCT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer">
+    <div class="footer-glow"></div>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo-eye small-eye">
+              <svg viewBox="0 0 44 44" fill="none"><ellipse cx="22" cy="22" rx="20" ry="12" stroke="url(#feyeGrad)" stroke-width="1.5"/><circle cx="22" cy="22" r="6" fill="#001a66" opacity="0.9"/><circle cx="22" cy="22" r="3" fill="#00f5ff" opacity="0.7"/><defs><linearGradient id="feyeGrad" x1="2" y1="10" x2="42" y2="34" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00f5ff"/><stop offset="100%" stop-color="#0066ff"/></linearGradient></defs></svg>
+            </div>
+            <span>KIARA</span>
+          </div>
+          <p class="footer-tagline">KIARA — Intelligent Explainable Healthcare AI</p>
+          <p class="footer-sub">Knowledge-based Intelligent Analysis for Retinal Assessment</p>
+        </div>
+        <div class="footer-links">
+          <div class="fl-col">
+            <div class="fl-title">Platform</div>
+            <a href="#">Dashboard</a><a href="#">Analysis Engine</a><a href="#">Reports</a><a href="#">Research Portal</a>
+          </div>
+          <div class="fl-col">
+            <div class="fl-title">Technology</div>
+            <a href="#">Model Architecture</a><a href="#">Grad-CAM Docs</a><a href="#">API Reference</a><a href="#">Dataset</a>
+          </div>
+          <div class="fl-col">
+            <div class="fl-title">Compliance</div>
+            <a href="#">HIPAA Policy</a><a href="#">Data Security</a><a href="#">Clinical Validation</a><a href="#">Ethics Statement</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="fb-left">
+          <span class="fb-dot"></span>
+          <span>AI System v2.4.1 · Model: EfficientNet-B3 · Last Validated: 2025-06</span>
+        </div>
+        <div class="fb-right">
+          <span>For research use only. Not a substitute for clinical diagnosis.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
